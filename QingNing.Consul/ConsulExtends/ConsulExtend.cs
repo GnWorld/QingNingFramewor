@@ -7,8 +7,6 @@ namespace QingNing.Consul.ConsulExtends
     {
         public static void AddConsulRegister(this IServiceCollection services)
         {
-            services.ConfigureOptions<ConsulOptions>();
-
             services.AddTransient<IConsulRegister, ConsulRegister>();
 
         }
