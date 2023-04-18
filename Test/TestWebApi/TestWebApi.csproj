@@ -15,8 +15,4 @@
     <ProjectReference Include="..\..\QingNing.Consul\QingNing.Consul.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
