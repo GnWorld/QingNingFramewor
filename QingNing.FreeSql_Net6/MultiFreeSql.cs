@@ -47,12 +47,12 @@ namespace QingNing.FreeSql_Net6
     }
     public class MultiFreeSql : BaseMultiFreeSql<DbEnum>
     {
-        private readonly Logger<MultiFreeSql> logger;
+        //private readonly Logger<MultiFreeSql> logger;
 
-        public MultiFreeSql(Logger<MultiFreeSql> logger)
-        {
-            this.logger = logger;
-        }
+        //public MultiFreeSql(Logger<MultiFreeSql> logger)
+        //{
+        //    this.logger = logger;
+        //}
 
         public void RegisterDbSet(IConfiguration configuration)
         {
@@ -77,7 +77,7 @@ namespace QingNing.FreeSql_Net6
                     .UseMonitorCommand(
                         cmd =>
                         {
-                            logger.LogInformation(cmd.CommandText);
+                            //logger.LogInformation(cmd.CommandText);
                             //LogHelper.Info(cmd.CommandText);
                         });
                     //是否开启读写分离配置

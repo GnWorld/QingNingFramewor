@@ -1,6 +1,7 @@
 using QingNing.Consul.ConsulExtends;
 using Consul;
 using QingNing.Consul;
+using TestWebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("Configurations\\Consul.json");
@@ -13,7 +14,7 @@ builder.Services.AddSwaggerGen();
 
 //×¢ÈëConsul
 builder.Services.AddConsulRegister();
-
+builder.Services.AddFreeSQLConfiguration(builder.Configuration);
 
 
 var app = builder.Build();

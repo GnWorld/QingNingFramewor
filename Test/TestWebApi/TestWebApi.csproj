@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\QingNing.Consul\QingNing.Consul.csproj" />
+    <ProjectReference Include="..\..\QingNing.FreeSql_Net6\QingNing.FreeSql_Net6.csproj" />
   </ItemGroup>
 
 </Project>
