@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace TestWebApi.Controllers
 {
@@ -7,11 +6,18 @@ namespace TestWebApi.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-   
 
-        [HttpPost]
+
+        public LoginController()
+        {
+
+        }
+
+        [HttpGet]
         public IActionResult Test()
         {
+
+            //var a = _roleRep.Select.ToList();
             return Ok();
         }
 
