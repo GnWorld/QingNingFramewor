@@ -1,21 +1,24 @@
 ﻿using Newtonsoft.Json;
-using FreeSql.DataAnnotations;
+using SqlSugar;
 
 namespace TestWebApi.Entity
 {
-    [JsonObject(MemberSerialization.OptIn), Table(Name = "app_role")]
+    [SugarTable]
     public class AppRole
     {
         /// <summary>
         /// 角色ID
         /// </summary>
-        [JsonProperty, Column(Name = "role_id", IsPrimary = true)]
+        [JsonProperty, SugarColumn(ColumnName = "role_id", IsPrimaryKey = true, IsIdentity = true)]
         public long RoleId { get; set; }
 
         /// <summary>
         /// 角色名称
         /// </summary>
-        [JsonProperty, Column(Name = "role_name", DbType = "varchar(60)")]
+        [JsonProperty, SugarColumn(ColumnName = "role_name", ColumnDataType = "varchar(60)")]
         public string RoleName { get; set; } = string.Empty;
+
+        [SugarColumn(IsNullable =false)]
+        public string Code { get; set; }
     }
 }

@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using QingNing.MultiDbSqlSugar;
+using SqlSugar;
+using TestWebApi.Entity;
 
 namespace TestWebApi.Controllers
 {
@@ -6,18 +9,20 @@ namespace TestWebApi.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
+        private readonly SqlSugarRepository<AppRole> _appRoleRep;
 
-
-        public LoginController()
+        public LoginController(SqlSugarRepository<AppRole> appRoleRep)
         {
-
+            _appRoleRep = appRoleRep;
         }
 
         [HttpGet]
+        [UnitOfWork]
         public IActionResult Test()
         {
+            var b = _appRoleRep.Insert(new AppRole { RoleName = "admin", Code = "admin" });
+            var a = _appRoleRep.AsUpdateable(new AppRole { RoleId = 7, RoleName = "测试", Code = "test1" }).ExecuteCommand();
 
-            //var a = _roleRep.Select.ToList();
             return Ok();
         }
 
