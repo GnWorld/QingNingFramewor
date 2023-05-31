@@ -11,7 +11,6 @@ public class SqlSugarRepository<T> : SimpleClient<T> where T : class, new()
     protected ITenant iTenant = null; // 多租户事务
 
 
-
     public SqlSugarRepository(ISqlSugarClient context = null) : base(context)
     {
         //iTenant = App.GetRequiredService<ISqlSugarClient>().AsTenant();
@@ -50,4 +49,58 @@ public class SqlSugarRepository<T> : SimpleClient<T> where T : class, new()
         //}
         //base.Context = iTenant.GetConnectionScope(tenantId.ToString());
     }
+
+
+    /// <summary>
+    /// 立即添加
+    /// </summary>
+    /// <param name="insertObj"></param>
+    /// <returns></returns>
+    public virtual bool InsertNow(T insertObj)
+    {
+        using var uow = Context.CreateContext();
+        var f = uow.Db.Insertable(insertObj).ExecuteCommand() > 0;
+        uow.Commit();
+        return f;
+    }
+    /// <summary>
+    /// 立即添加
+    /// </summary>
+    /// <param name="insertObj"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> InsertNowAsync(T insertObj)
+    {
+        using var uow = Context.CreateContext();
+        var f = await uow.Db.Insertable(insertObj).ExecuteCommandAsync() > 0;
+        uow.Commit();
+        return f;
+    }
+
+    /// <summary>
+    /// 立即更新
+    /// </summary>
+    /// <param name="insertObj"></param>
+    /// <returns></returns>
+    public virtual bool UpdateNow(T insertObj)
+    {
+        using var uow = Context.CreateContext();
+        var f = uow.Db.Updateable(insertObj).ExecuteCommand() > 0;
+        uow.Commit();
+        return f;
+    }
+
+    /// <summary>
+    /// 立即更新
+    /// </summary>
+    /// <param name="insertObj"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> UpdateNowAsync(T insertObj)
+    {
+        using var uow = Context.CreateContext();
+        var f = await uow.Db.Updateable(insertObj).ExecuteCommandAsync() > 0;
+        uow.Commit();
+        return f;
+    }
+
+
 }

@@ -1,9 +1,8 @@
-﻿namespace TestWebApi.Repositoies
+﻿using QingNing.MultiDbSqlSugar;
+
+namespace TestWebApi.Repositoies
 {
-    //public class AppRoleRepository : FreeSqlRepository<AppRole, long>
-    //{
-    //    public AppRoleRepository(BaseMultiFreeSql<string> fsql, Expression<Func<AppRole, bool>> filter, Func<string, string> asTable = null) : base(fsql.Get("Test"), filter, asTable)
-    //    {
-    //    }
-    //}
+    public class AppRoleRepository<T> : SqlSugarRepository<T> where T : class, new()
+    {
+    }
 }
