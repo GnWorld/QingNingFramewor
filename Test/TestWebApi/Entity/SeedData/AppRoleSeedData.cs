@@ -8,7 +8,7 @@ namespace TestWebApi.Entity.SeedData
         {
             var list = new List<AppRole>()
             {
-                new AppRole{RoleId=1,RoleName="超级管理员"}
+                new AppRole{RoleId=1,RoleName="超级管理员",Code="SuperAdmin"}
             };
             return list;
         }

@@ -22,16 +22,17 @@ namespace QingNing.Consul
             var client = new ConsulClient();
             var registration = new AgentServiceRegistration();
             registration.ID = Guid.NewGuid().ToString();// 唯一Id
-            registration.Name = _consulOptions.Name; // 服务名(分组--多个实例组成的集群)
-            registration.Address = _consulOptions.Address; // 服务绑定IP
-            registration.Port = Convert.ToInt32(_consulOptions.Port); // 服务绑定端口
-                                                                //Tag 标签
+            registration.Name = _consulOptions.ServiceName; // 服务名(分组--多个实例组成的集群)
+            registration.Address = _consulOptions.ConsulIp; // 服务绑定IP
+            registration.Port = Convert.ToInt32(_consulOptions.ConsulPort); // 服务绑定端口
+                                                                            //Tag 标签
             registration.Check = new AgentServiceCheck
             {
-                
+
                 DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5), // 服务启动多久后注册
                 Interval = TimeSpan.FromSeconds(10), // 健康检查时间间隔
-                HTTP = $"http://{_consulOptions.Ip}:{_consulOptions.Port}{_consulOptions.HealthCheck}", // 健康检查地址
+                
+                HTTP = $"http://{_consulOptions.ServiceIp}:{_consulOptions.ServicePort}{_consulOptions.HealthCheck}", // 健康检查地址
                 Timeout = TimeSpan.FromSeconds(5) // 超时时间
 
             };

@@ -1,16 +1,34 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace QingNing.Consul.ConsulExtends
 {
     public static class ConsulExtend
     {
+
+        #region Server 端  
+        /// <summary>
+        /// 注入Consul配置
+        /// </summary>
+        /// <param name="services"></param>
         public static void AddConsulRegister(this IServiceCollection services)
         {
             services.AddTransient<IConsulRegister, ConsulRegister>();
 
         }
 
+        /// <summary>
+        /// 使用Consul注册
+        /// </summary>
+        /// <param name="app"></param>
+        public static void UseConsulRegister(this IApplicationBuilder app)
+        {
+            var consulRegister = app.ApplicationServices.GetRequiredService<IConsulRegister>();
+            consulRegister.ConsulRegistAsync().Wait();
+        }
+        #endregion
+
+        #region Client
         /// <summary>
         /// 注册Consul调度策略
         /// </summary>
@@ -40,5 +58,7 @@ namespace QingNing.Consul.ConsulExtends
             Polling = 1,
             Weight = 2
         }
+        #endregion
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis.Options;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QingNing.Framework.Configuration
+namespace QingNing.Framework
 {
     public static class ConfigurableOptionsServiceCollectionExtensions
     {
@@ -22,5 +23,14 @@ namespace QingNing.Framework.Configuration
 
             return services;
         }
+        public static void AddConfigurationJsonFile(this IConfigurationBuilder configuration, string path = "Configurations")
+        {
+            var jsonSettings = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path), "*.json");
+            for (int i = 0; i < jsonSettings.Length; i++)
+            {
+                configuration.AddJsonFile(jsonSettings[i]);
+            }
+        }
+
     }
 }

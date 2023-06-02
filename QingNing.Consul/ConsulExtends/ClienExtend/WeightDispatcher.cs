@@ -34,7 +34,7 @@ namespace QingNing.Consul
         {
             ConsulClient client = new ConsulClient(c =>
             {
-                c.Address = new Uri($"{_consulOptions.Address}");
+                c.Address = new Uri($"{_consulOptions.ConsulIp}:{_consulOptions.ConsulPort}");
             });
             AgentService agentService = null;
             var response = client.Agent.Services().Result.Response;
