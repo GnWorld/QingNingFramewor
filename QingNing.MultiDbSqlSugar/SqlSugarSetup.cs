@@ -13,9 +13,9 @@ public static class SqlSugarSetup
     /// SqlSugar 上下文初始化
     /// </summary>
     /// <param name="services"></param>
-    public static void AddSqlSugar(this IServiceCollection services, IConfiguration configuration)
+    public  static void AddSqlSugar(this IServiceCollection services, IConfiguration configuration,string dbConnectionOptions= "DbConnectionOptions")
     {
-        var dbOptions = configuration.GetSection("DbConnectionOptions").Get<DbConnectionOptions>();
+        var dbOptions = configuration.GetSection(dbConnectionOptions).Get<DbConnectionOptions>();
         dbOptions?.ConnectionConfigs.ForEach(SetDbConfig);
 
         SqlSugarScope sqlSugar = new(dbOptions?.ConnectionConfigs.Adapt<List<ConnectionConfig>>(), db =>

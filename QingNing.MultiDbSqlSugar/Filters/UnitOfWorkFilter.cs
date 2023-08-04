@@ -31,7 +31,7 @@ namespace QingNing.MultiDbSqlSugar
         /// </summary>
         /// <param name="context">动作方法上下文</param>
         /// <param name="next">中间件委托</param>
-        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        public virtual async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             // 获取动作方法描述器
             var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
