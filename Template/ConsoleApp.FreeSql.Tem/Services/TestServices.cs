@@ -2,6 +2,7 @@
 using ConsoleApp.FreeSqlTemplate.Data.Models;
 
 namespace ConsoleApp.FreeSqlTemplate.Services;
+
 public class TestServices
 {
     /// <summary>
@@ -22,8 +23,14 @@ public class TestServices
 
     public async Task TestAsync()
     {
-        var list = await _rep.Orm.Select<Test>().WithSql("select  * from Test").ToListAsync();
-        var a = await _cloud.Select<Test>().WithSql("select  * from Test").ToListAsync();
+        //列表
+        var list = await _rep.Orm.Select<Test>().ToListAsync();
+        //单个实体
+        var test = await _cloud.Select<Test>().FirstAsync();
+
+        //更换数据库
+        _cloud.Change<DbEnum.db2>();
+
     }
 
 

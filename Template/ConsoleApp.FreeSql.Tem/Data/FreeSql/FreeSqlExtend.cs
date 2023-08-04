@@ -1,4 +1,5 @@
-﻿using FreeSql;
+﻿using ConsoleApp.FreeSqlTemplate.Data.Base;
+using FreeSql;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Logging;
@@ -42,10 +43,20 @@ public static class FreeSqlExtend
                     freeBuilder.UseSlave(oFreeSqlDbConnectionItemConfig.SlaveConnections.ToArray());
                 }
                 IFreeSql Fsql = freeBuilder.Build();
+
+                //全局过滤器
+                Fsql.GlobalFilter
+                //.Apply<ITenant>(nameof(ITenant), x => x.TenantId == CurrentTenant.Id)
+                .Apply<IDeleted>(nameof(IDeleted), x => x.IsDeleted == false)
+
+                ;
+
                 Fsql.Aop.CurdBefore += (s, e) =>
                 {
                     string strSQL = e.Sql;
                 };
+
+
                 Fsql.Aop.CurdAfter += (s, e) =>
                 {
                     if (e.ElapsedMilliseconds > 200)
