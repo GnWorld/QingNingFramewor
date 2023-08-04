@@ -1,22 +1,13 @@
-﻿using ConsoleApp.FreeSqlTemplate.Data.Models;
-using FreeSql;
+﻿using FreeSql;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Logging;
 using Npgsql;
-using QingNing.MultiFreeSql;
 
 namespace ConsoleApp.FreeSqlTemplate.Data;
-
-public enum DbEnum { db1, db2 }
-public class MultiFreeSql : FreeSqlCloud<DbEnum>
+public static class FreeSqlExtend
 {
-    public MultiFreeSql() : base(null) { }
-    public MultiFreeSql(string distributeKey) : base(distributeKey) { }
-}
 
-public static class FreeSqlRegister
-{
     public static void RegisterFreeSql(this IServiceCollection services, IConfiguration configuration)
     {
         Dictionary<DbEnum, DbConnectionOptionsConfig> dicDbConnections = new()
@@ -24,7 +15,7 @@ public static class FreeSqlRegister
                 { DbEnum.db1, configuration.GetSection("DbConnectionStrings:Db1ConnectionString").Get<DbConnectionOptionsConfig>() },
                 { DbEnum.db2, configuration.GetSection("DbConnectionStrings:Db2ConnectionString").Get<DbConnectionOptionsConfig>() },
             };
-        var fsql = new MultiFreeSql();
+        var fsql = new FreeSqlCloud();
         fsql.DistributeTrace = log => Console.WriteLine(log.Split('\n')[0].Trim());
 
         fsql.Register(DbEnum.db1, () => new Lazy<IFreeSql>(() =>
@@ -88,6 +79,8 @@ public static class FreeSqlRegister
         services.AddSingleton(fsql);
 
     }
+
+
 
 
 }

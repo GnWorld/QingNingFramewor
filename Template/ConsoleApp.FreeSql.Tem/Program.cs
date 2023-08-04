@@ -1,11 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using ConsoleApp.FreeSqlTemplate;
 using ConsoleApp.FreeSqlTemplate.Data;
 using ConsoleApp.FreeSqlTemplate.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using QingNing.MultiFreeSql;
 
 var builder = Host.CreateApplicationBuilder();
 builder.Configuration.AddJsonFile("appsettings.json");

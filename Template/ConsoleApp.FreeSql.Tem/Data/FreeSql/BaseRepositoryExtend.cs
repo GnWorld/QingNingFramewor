@@ -1,8 +1,7 @@
-﻿using ConsoleApp.FreeSqlTemplate.Data;
-using FreeSql;
+﻿using FreeSql;
 using System.Linq.Expressions;
 
-namespace QingNing.FreeSqlTemplate.Data
+namespace ConsoleApp.FreeSqlTemplate.Data
 {
     public class BaseRepositoryExtend<T, TKey> : BaseRepository<T, TKey> where T : class, new()
     {

@@ -1,12 +1,5 @@
 ﻿using ConsoleApp.FreeSqlTemplate.Data;
 using ConsoleApp.FreeSqlTemplate.Data.Models;
-using FreeSql;
-using QingNing.MultiFreeSql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApp.FreeSqlTemplate.Services;
 public class TestServices
@@ -18,10 +11,10 @@ public class TestServices
     /// <summary>
     /// FreeSqlCloud
     /// </summary>
-    private readonly MultiFreeSql _cloud;
+    private readonly FreeSqlCloud _cloud;
 
 
-    public TestServices(BaseRepositoryExtend<Test, long> rep, MultiFreeSql cloud)
+    public TestServices(BaseRepositoryExtend<Test, long> rep, FreeSqlCloud cloud)
     {
         _rep = rep;
         _cloud = cloud;

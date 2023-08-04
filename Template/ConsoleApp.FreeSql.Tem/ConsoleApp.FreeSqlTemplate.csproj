@@ -8,12 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FreeSql.All" Version="3.2.698" />
+    <PackageReference Include="FreeSql.Cloud" Version="1.6.6" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\QingNing.MultiFreeSql\QingNing.MultiFreeSql.csproj" />
   </ItemGroup>
 
   <ItemGroup>
