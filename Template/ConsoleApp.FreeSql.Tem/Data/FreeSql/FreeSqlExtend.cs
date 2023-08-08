@@ -13,15 +13,15 @@ public static class FreeSqlExtend
     {
         Dictionary<DbEnum, DbConnectionOptionsConfig> dicDbConnections = new()
         {
-                { DbEnum.db1, configuration.GetSection("DbConnectionStrings:Db1ConnectionString").Get<DbConnectionOptionsConfig>() },
-                { DbEnum.db2, configuration.GetSection("DbConnectionStrings:Db2ConnectionString").Get<DbConnectionOptionsConfig>() },
+                { DbEnum.ids, configuration.GetSection("DbConnectionStrings:IdsConnectionString").Get<DbConnectionOptionsConfig>() },
+                { DbEnum.fpl, configuration.GetSection("DbConnectionStrings:FPLConnectionString").Get<DbConnectionOptionsConfig>() },
             };
         var fsql = new FreeSqlCloud();
         fsql.DistributeTrace = log => Console.WriteLine(log.Split('\n')[0].Trim());
 
-        fsql.Register(DbEnum.db1, () => new Lazy<IFreeSql>(() =>
+        fsql.Register(DbEnum.ids, () => new Lazy<IFreeSql>(() =>
         {
-            DbConnectionOptionsConfig oFreeSqlDbConnectionItemConfig = dicDbConnections[DbEnum.db1];
+            DbConnectionOptionsConfig oFreeSqlDbConnectionItemConfig = dicDbConnections[DbEnum.ids];
 
             if (oFreeSqlDbConnectionItemConfig?.MasterConnetion != null)
             {
@@ -80,9 +80,9 @@ public static class FreeSqlExtend
             }
 
         }, true)?.Value);
-        fsql.Register(DbEnum.db2, () =>
+        fsql.Register(DbEnum.fpl, () =>
         {
-            DbConnectionOptionsConfig oFreeSqlDbConnectionItemConfig = dicDbConnections[DbEnum.db2];
+            DbConnectionOptionsConfig oFreeSqlDbConnectionItemConfig = dicDbConnections[DbEnum.fpl];
             var freeSql = new FreeSqlBuilder().UseConnectionString(oFreeSqlDbConnectionItemConfig.DataType, oFreeSqlDbConnectionItemConfig.MasterConnetion).Build();
             return freeSql;
         });

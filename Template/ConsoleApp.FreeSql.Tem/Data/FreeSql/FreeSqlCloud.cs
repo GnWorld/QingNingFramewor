@@ -6,7 +6,7 @@ using Npgsql;
 
 namespace ConsoleApp.FreeSqlTemplate.Data;
 
-public enum DbEnum { db1, db2 }
+public enum DbEnum { ids, fpl }
 public class FreeSqlCloud : FreeSqlCloud<DbEnum>
 {
     public FreeSqlCloud() : base(null) { }

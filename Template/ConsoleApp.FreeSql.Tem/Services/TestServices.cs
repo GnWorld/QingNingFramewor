@@ -29,7 +29,8 @@ public class TestServices
         var test = await _cloud.Select<Test>().FirstAsync();
 
         //更换数据库
-        _cloud.Change<DbEnum.db2>();
+        _cloud.Change(DbEnum.fpl);
+
 
     }
 
