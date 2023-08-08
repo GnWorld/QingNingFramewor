@@ -10,6 +10,11 @@ namespace ConsoleApp.FreeSqlTemplate.Data.Models.Fpl;
 [Table(Name = "FPLRoles")]
 public class FPLRole : EntityBase
 {
+    public FPLRole()
+    {
+        ConcurrencyStamp = Guid.NewGuid().ToString("N");
+    }
+
 
 
     /// <summary>
@@ -34,5 +39,6 @@ public class FPLRole : EntityBase
     /// </summary>
     public string[] Permissions { get; set; }
 
+    public string ConcurrencyStamp { get; set; }
 
 }

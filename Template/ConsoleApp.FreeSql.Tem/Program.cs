@@ -11,7 +11,7 @@ Log.Logger = new LoggerConfiguration()
 #if DEBUG
     .MinimumLevel.Debug()
 #else
-            .MinimumLevel.Information()
+    .MinimumLevel.Information()
 #endif
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
     .Enrich.FromLogContext()
@@ -24,13 +24,11 @@ builder.Logging.AddSerilog(Log.Logger);
 builder.Configuration.AddJsonFile("appsettings.json");
 
 builder.Services.RegisterFreeSql(builder.Configuration);
-builder.Services.AddFreeRepository(null, typeof(BaseRepositoryExtend<,>).Assembly);
-builder.Services.AddTransient<TestServices>();
+//builder.Services.AddFreeRepository(null, typeof(BaseRepositoryExtend<,>).Assembly);
 builder.Services.AddTransient<IdsSyncUserService>();
 
 var app = builder.Build();
-//var testService = app.Services.GetService<TestServices>();
-//await testService.TestAsync();
+
 var _syncUserService = app.Services.GetService<IdsSyncUserService>();
 await _syncUserService.SyncUser();
 
