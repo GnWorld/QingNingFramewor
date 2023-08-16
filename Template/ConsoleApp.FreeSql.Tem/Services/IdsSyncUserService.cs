@@ -1,6 +1,7 @@
 ﻿using ConsoleApp.FreeSqlTemplate.Data;
 using ConsoleApp.FreeSqlTemplate.Data.Models;
 using ConsoleApp.FreeSqlTemplate.Data.Models.Fpl;
+using ConsoleApp.FreeSqlTemplate.Data.Repository;
 using ConsoleApp.FreeSqlTemplate.Services.Dtos.Ids;
 using FreeSql;
 using Microsoft.Extensions.Logging;
@@ -13,23 +14,28 @@ namespace ConsoleApp.FreeSqlTemplate.Services;
 /// <summary>
 /// 同步用户数据
 /// </summary>
+
 public class IdsSyncUserService
 {
     private readonly FreeSqlCloud _cloud;
     private readonly ILogger<IdsSyncUserService> _logger;
+    private readonly FPLUserRepository _userRep;
 
-    public IdsSyncUserService(FreeSqlCloud cloud, ILogger<IdsSyncUserService> logger)
+    public IdsSyncUserService(FreeSqlCloud cloud, ILogger<IdsSyncUserService> logger, FPLUserRepository userRep)
     {
         _cloud = cloud;
         _logger = logger;
+        _userRep = userRep;
     }
 
     /// <summary>
     /// 同步用户
     /// </summary>
     /// <returns></returns>
+
     public async Task SyncUser()
     {
+        
         //IDS库
         _cloud.Change(DbEnum.IDS);
         var idsUsers = await _cloud.Select<IdsUserDto>().WithSql(@"Select * From AbpUsers as u WHERE u.IsDeleted=0 AND TenantId is not null").ToListAsync();

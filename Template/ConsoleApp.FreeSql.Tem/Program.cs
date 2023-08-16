@@ -7,12 +7,9 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 
+//日志
 Log.Logger = new LoggerConfiguration()
-#if DEBUG
-    .MinimumLevel.Debug()
-#else
     .MinimumLevel.Information()
-#endif
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
     .Enrich.FromLogContext()
     .WriteTo.Async(c => c.File("Logs/logs.txt"))
@@ -21,15 +18,23 @@ Log.Logger = new LoggerConfiguration()
 
 var builder = Host.CreateApplicationBuilder();
 builder.Logging.AddSerilog(Log.Logger);
+
+//加载appsetting.json 配置文件
 builder.Configuration.AddJsonFile("appsettings.json");
 
+//注入FreeSql
 builder.Services.RegisterFreeSql(builder.Configuration);
-//builder.Services.AddFreeRepository(null, typeof(BaseRepositoryExtend<,>).Assembly);
+
+
+//注入仓储
+builder.Services.AddFreeRepository(null, typeof(BaseRepositoryExtend<,>).Assembly);
+
+//注入Service
 builder.Services.AddTransient<IdsSyncUserService>();
 
 var app = builder.Build();
 
-var _syncUserService = app.Services.GetService<IdsSyncUserService>();
+var _syncUserService = app.Services.GetRequiredService<IdsSyncUserService>();
 await _syncUserService.SyncUser();
 
 app.Run();
