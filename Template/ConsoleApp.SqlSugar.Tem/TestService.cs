@@ -1,35 +1,35 @@
 ﻿using QingNing.MultiDbSqlSugar;
 using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApp.SqlSugar.Tem;
 public class TestService
 {
-    private readonly SqlSugarRepository<TestModel> _context;
-    private readonly SimpleClient<TestModel> _IRep;
+    private readonly SqlSugarRepository<AppRole> _testRep;
 
-    public TestService(SqlSugarRepository<TestModel> context, SimpleClient<TestModel> iRep)
+    public TestService(SqlSugarRepository<AppRole> testRep)
     {
-        _context = context;
-        _IRep = iRep;
+        _testRep = testRep;
     }
 
+    [UnitOfWork]
     public async Task Test()
     {
-        var t = await _context.Context.SqlQueryable<TestModel>("select * from AppRole").ToListAsync();
-        var b = await _IRep.Context.SqlQueryable<TestModel>("select * from AppRole").ToListAsync();
+        var t = await _testRep.Context.SqlQueryable<AppRole>("select * from AppRole").ToListAsync();
+
+        var a = await _testRep.InsertAsync(new AppRole { Id = 2, Code = "Admin", Name = "管理员" });
+        var b = await _testRep.InsertAsync(new AppRole { Id = 2, Code = "Admin", Name = "管理员" });
+        var c = await _testRep.InsertAsync(new AppRole { Id = 3, Code = "Admin", Name = "管理员" });
+        var d = await _testRep.InsertAsync(new AppRole { Id = 3, Code = "Admin", Name = "管理员" });
+
     }
 
-    public class TestModel
+    [SugarTable(tableName: "AppRole")]
+    public class AppRole
     {
+        [SugarColumn(IsPrimaryKey = true)]
+        public long Id { get; set; }
 
-        public long role_id { get; set; }
-
-        public string role_name { get; set; }
+        public string Name { get; set; }
 
         public string Code { get; set; }
 

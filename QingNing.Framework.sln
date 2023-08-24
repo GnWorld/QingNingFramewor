@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QingNing.Framework", "QingNing.Framework\QingNing.Framework.csproj", "{55386560-B856-45C2-9CC7-7A62A0A4EA2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QingNing", "QingNing.Framework\QingNing.csproj", "{55386560-B856-45C2-9CC7-7A62A0A4EA2D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QingNing.Ocelot", "QingNing.Ocelot\QingNing.Ocelot.csproj", "{1930DC35-306E-48E5-957D-6B7B8F691948}"
 EndProject
@@ -18,8 +18,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QingNing.Tools", "QingNing.Tools\QingNing.Tools.csproj", "{63E717CA-A46C-451E-85F7-C64C068D6371}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QingNing.MultiFreeSql", "QingNing.MultiFreeSql\QingNing.MultiFreeSql.csproj", "{6725D923-EFFD-4C25-873D-C9847348E5C2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QingNing.MultiDbSqlSugar", "QingNing.MultiDbSqlSugar\QingNing.MultiDbSqlSugar.csproj", "{07EED9AC-1060-44CD-BEEB-CE256F17531E}"
@@ -28,9 +26,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QingNing.JwtBearer", "QingN
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Template", "Template", "{622E7B16-BBC7-4981-A63B-3493188F9B8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp.FreeSqlTemplate", "Template\ConsoleApp.FreeSql.Tem\ConsoleApp.FreeSqlTemplate.csproj", "{291458EC-0666-48BA-A6A6-2953EC6057EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp.FreeSqlTemplate", "Template\ConsoleApp.FreeSql.Tem\ConsoleApp.FreeSqlTemplate.csproj", "{291458EC-0666-48BA-A6A6-2953EC6057EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp.SqlSugar.Tem", "Template\ConsoleApp.SqlSugar.Tem\ConsoleApp.SqlSugar.Tem.csproj", "{B8B96BD3-B378-46B0-A19E-521C724EA199}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp.SqlSugar.Tem", "Template\ConsoleApp.SqlSugar.Tem\ConsoleApp.SqlSugar.Tem.csproj", "{B8B96BD3-B378-46B0-A19E-521C724EA199}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,10 +52,6 @@ Global
 		{6748D1FE-9118-437B-81AF-A55837DD6BA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6748D1FE-9118-437B-81AF-A55837DD6BA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6748D1FE-9118-437B-81AF-A55837DD6BA1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{63E717CA-A46C-451E-85F7-C64C068D6371}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{63E717CA-A46C-451E-85F7-C64C068D6371}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{63E717CA-A46C-451E-85F7-C64C068D6371}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{63E717CA-A46C-451E-85F7-C64C068D6371}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6725D923-EFFD-4C25-873D-C9847348E5C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6725D923-EFFD-4C25-873D-C9847348E5C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6725D923-EFFD-4C25-873D-C9847348E5C2}.Release|Any CPU.ActiveCfg = Release|Any CPU

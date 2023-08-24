@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QingNing.Framework
+﻿namespace QingNing
 {
     public static class EnumHelper<T> where T : struct
     {

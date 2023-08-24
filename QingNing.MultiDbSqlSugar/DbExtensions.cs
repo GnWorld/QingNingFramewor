@@ -2,7 +2,7 @@
 
 namespace QingNing.MultiDbSqlSugar
 {
-    public static class DbExtebsions
+    public static class DbExtensions
     {
         public static string GetFullName(this MethodInfo method)
         {
