@@ -77,7 +77,7 @@ public static class SqlSugarSetup
         config.ConfigureExternalServices = configureExternalServices;
         config.InitKeyType = InitKeyType.Attribute;
         config.IsAutoCloseConnection = true;
-        config.SlaveConnectionConfigs - new List<SlaveConnectionConfig>() { };
+        config.SlaveConnectionConfigs = new List<SlaveConnectionConfig>() { };
         config.MoreSettings = new ConnMoreSettings
         {
             IsAutoRemoveDataCache = true,
@@ -97,7 +97,7 @@ public static class SqlSugarSetup
 
         // 设置超时时间
         db.Ado.CommandTimeOut = 30;
-       
+
         // 打印SQL语句
         db.Aop.OnLogExecuting = (sql, pars) =>
         {
