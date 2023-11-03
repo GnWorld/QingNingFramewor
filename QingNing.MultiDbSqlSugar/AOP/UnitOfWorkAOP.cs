@@ -56,6 +56,10 @@ public class UnitOfWorkAOP : IInterceptor
                 AfterException(method);
                 throw;
             }
+            finally
+            {
+                uta.FinalAction?.Invoke();
+            }
         }
         else
         {

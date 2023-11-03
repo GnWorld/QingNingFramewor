@@ -13,4 +13,9 @@ public class UnitOfWorkAttribute : Attribute
     /// 事务传播方式
     /// </summary>
     public Propagation Propagation { get; set; } = Propagation.Required;
+
+    /// <summary>
+    /// 时间
+    /// </summary>
+    public Action FinalAction { get; set; };
 }
