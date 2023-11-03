@@ -1,37 +1,64 @@
-﻿using QingNing.MultiDbSqlSugar;
+﻿using Newtonsoft.Json;
+using QingNing.MultiDbSqlSugar;
+using QingNing.MultiDbSqlSugar.Attributes;
 using SqlSugar;
 
 namespace ConsoleApp.SqlSugar.Tem;
 public class TestService
 {
-    private readonly SqlSugarRepository<AppRole> _testRep;
+    private readonly SqlSugarRepository<AppRole> _roleRep;
+
 
     public TestService(SqlSugarRepository<AppRole> testRep)
     {
-        _testRep = testRep;
+        _roleRep = testRep;
     }
 
     [UnitOfWork]
     public async Task Test()
     {
-        var t = await _testRep.Context.SqlQueryable<AppRole>("select * from AppRole").ToListAsync();
+        var role = new AppRole()
+        {
+            RoleId = 1,
+            RoleName = "test",
+            Code = "Test",
+        };
 
-        var a = await _testRep.InsertAsync(new AppRole { Id = 2, Code = "Admin", Name = "管理员" });
-        var b = await _testRep.InsertAsync(new AppRole { Id = 2, Code = "Admin", Name = "管理员" });
-        var c = await _testRep.InsertAsync(new AppRole { Id = 3, Code = "Admin", Name = "管理员" });
-        var d = await _testRep.InsertAsync(new AppRole { Id = 3, Code = "Admin", Name = "管理员" });
+        await _roleRep.InsertAsync(role);
+
+        var role2 = new AppRole()
+        {
+            RoleId = 1,
+            RoleName = null,
+            Code = "Test",
+        };
+
+        await _roleRep.InsertAsync(role2);
+        //var t = await _testRep.Context.SqlQueryable<AppRole>("select * from AppRole").ToListAsync();
+
+        //var a = await _testRep.InsertAsync(new AppRole { Id = 2, Code = "Admin", Name = "管理员" });
+        //var b = await _testRep.InsertAsync(new AppRole { Id = 2, Code = "Admin", Name = "管理员" });
+        //var c = await _testRep.InsertAsync(new AppRole { Id = 3, Code = "Admin", Name = "管理员" });
+        //var d = await _testRep.InsertAsync(new AppRole { Id = 3, Code = "Admin", Name = "管理员" });
 
     }
 
-    [SugarTable(tableName: "AppRole")]
+    [SugarTable]
     public class AppRole
     {
-        [SugarColumn(IsPrimaryKey = true)]
-        public long Id { get; set; }
+        /// <summary>
+        /// 角色ID
+        /// </summary>
+        [JsonProperty, SugarColumn(ColumnName = "role_id", IsPrimaryKey = true, IsIdentity = true)]
+        public long RoleId { get; set; }
 
-        public string Name { get; set; }
+        /// <summary>
+        /// 角色名称
+        /// </summary>
+        [JsonProperty, SugarColumn(ColumnName = "role_name", ColumnDataType = "varchar(60)")]
+        public string RoleName { get; set; } = string.Empty;
 
+        [SugarColumn(IsNullable = false)]
         public string Code { get; set; }
     }
-
 }

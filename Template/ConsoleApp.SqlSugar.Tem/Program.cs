@@ -1,4 +1,5 @@
-﻿using ConsoleApp.SqlSugar.Tem;
+﻿using Autofac;
+using ConsoleApp.SqlSugar.Tem;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,10 +24,14 @@ using QingNing.MultiDbSqlSugar;
 
 
 HostApplicationBuilder? builder = Host.CreateApplicationBuilder();
+builder.ConfigureContainer<ContainerBuilder>(o =>
+{
+    o.RegisterModule(new AutofacModuleRegister());
+    o.RegisterModule<AutofacPropertityModuleReg>();
+});
 builder.Configuration.AddJsonFile("appsettings.json");
-builder.Services.AddSqlSugar(builder.Configuration);
+builder.Services.AddSqlSugar(configuration: builder.Configuration);
 builder.Services.AddTransient<TestService>();
-builder.Services.AddHostFiltering(o => { });
 
 IHost? host = builder.Build();
 

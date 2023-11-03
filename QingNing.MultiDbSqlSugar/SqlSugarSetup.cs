@@ -1,14 +1,18 @@
 using Mapster;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using QingNing.MultiDbSqlSugar.Extensions;
 using SqlSugar;
 using System.Collections;
 using System.Reflection;
-
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 namespace QingNing.MultiDbSqlSugar;
 
 public static class SqlSugarSetup
 {
+
     /// <summary>
     /// SqlSugar 上下文初始化
     /// </summary>
@@ -30,7 +34,7 @@ public static class SqlSugarSetup
 
         services.AddSingleton<ISqlSugarClient>(sqlSugar); // 单例注册
         services.AddScoped(typeof(SqlSugarRepository<>)); // 仓储注册
-        services.AddTransient<IUnitOfWork, UnitOfWork>(); // 事务与工作单元注册
+        //services.AddUnitOfWork<SqlSugarUnitOfWork>(); // 事务与工作单元注册  
 
         // 初始化数据库表结构及种子数据
         dbOptions?.ConnectionConfigs.ForEach(config =>
@@ -38,10 +42,10 @@ public static class SqlSugarSetup
             InitDatabase(sqlSugar, config);
         });
 
-        services.AddControllers(options =>
-        {
-            options.Filters.Add<UnitOfWorkFilter>();
-        });
+        //services.AddControllers(options =>
+        //{
+        //    options.Filters.Add<UnitOfWorkAttribute>();
+        //});
     }
 
     /// <summary>

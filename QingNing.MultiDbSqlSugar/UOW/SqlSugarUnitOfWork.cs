@@ -1,8 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
 using SqlSugar;
 
-namespace QingNing.MultiDbSqlSugar.UOW;
-public class UnitOfWork : IDisposable
+namespace QingNing.MultiDbSqlSugar;
+
+/// <summary>
+/// SqlSugar 事务和工作单元
+/// </summary>
+public sealed class SqlSugarUnitOfWork
 {
     public ILogger Logger { get; set; }
     public ISqlSugarClient Db { get; internal set; }

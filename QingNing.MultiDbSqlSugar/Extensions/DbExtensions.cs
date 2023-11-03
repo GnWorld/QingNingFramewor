@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace QingNing.MultiDbSqlSugar
+namespace QingNing.MultiDbSqlSugar.Extensions
 {
     public static class DbExtensions
     {

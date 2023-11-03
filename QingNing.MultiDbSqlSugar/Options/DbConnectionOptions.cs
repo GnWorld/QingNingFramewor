@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using SqlSugar;
+﻿using SqlSugar;
 
 namespace QingNing.MultiDbSqlSugar;
 
