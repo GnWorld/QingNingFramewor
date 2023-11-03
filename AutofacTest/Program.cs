@@ -1,11 +1,24 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using AutofacTest;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
+    .ConfigureContainer<ContainerBuilder>(o =>
+    {
+        o.RegisterModule<AutofacModuleRegister>();
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+    }).ConfigureServices(services => {
+
+        services.AddControllers();
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
+    });
+
+
+
+
 
 var app = builder.Build();
 

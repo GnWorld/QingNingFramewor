@@ -10,13 +10,13 @@ namespace QingNing.MultiDbSqlSugar.AOP;
 /// </summary>
 public class UnitOfWorkAOP : IInterceptor
 {
-    private readonly ILogger<UnitOfWorkAOP> _logger;
+    //private readonly ILogger<UnitOfWorkAOP> _logger;
     private readonly IUnitOfWorkManage _unitOfWorkManage;
 
-    public UnitOfWorkAOP(IUnitOfWorkManage unitOfWorkManage, ILogger<UnitOfWorkAOP> logger)
+    public UnitOfWorkAOP(IUnitOfWorkManage unitOfWorkManage)
     {
         _unitOfWorkManage = unitOfWorkManage;
-        _logger = logger;
+
     }
 
     /// <summary>
@@ -25,6 +25,8 @@ public class UnitOfWorkAOP : IInterceptor
     /// <param name="invocation">包含被拦截方法的信息</param>
     public void Intercept(IInvocation invocation)
     {
+
+        Console.WriteLine("调用方法前");
         var method = invocation.MethodInvocationTarget ?? invocation.Method;
         //对当前方法的特性验证
         //如果需要验证
@@ -50,7 +52,7 @@ public class UnitOfWorkAOP : IInterceptor
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.ToString());
+                //_logger.LogError(ex.ToString());
                 AfterException(method);
                 throw;
             }
@@ -68,7 +70,7 @@ public class UnitOfWorkAOP : IInterceptor
             case Propagation.Required:
                 if (_unitOfWorkManage.TranCount <= 0)
                 {
-                    _logger.LogDebug($"Begin Transaction");
+                    //_logger.LogDebug($"Begin Transaction");
                     Console.WriteLine($"Begin Transaction");
                     _unitOfWorkManage.BeginTran(method);
                 }
@@ -82,7 +84,7 @@ public class UnitOfWorkAOP : IInterceptor
 
                 break;
             case Propagation.Nested:
-                _logger.LogDebug($"Begin Transaction");
+                //_logger.LogDebug($"Begin Transaction");
                 Console.WriteLine($"Begin Transaction");
                 _unitOfWorkManage.BeginTran(method);
                 break;
