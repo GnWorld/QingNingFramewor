@@ -1,4 +1,8 @@
 ﻿using Autofac;
+using Autofac.Core;
+using Autofac.Extensions.DependencyInjection;
+using Autofac.Extras.DynamicProxy;
+using Castle.Core.Configuration;
 using ConsoleApp.SqlSugar.Tem;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -7,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using QingNing.MultiDbSqlSugar;
+using QingNing.MultiDbSqlSugar.AOP;
+using QingNing.MultiDbSqlSugar.UOW;
 
 
 //WebApplicationBuilder webBuilder = WebApplication.CreateBuilder();
@@ -22,20 +28,42 @@ using QingNing.MultiDbSqlSugar;
 //webhost.Run();
 
 
+Microsoft.Extensions.Configuration.IConfiguration Configuration;
 
-HostApplicationBuilder? builder = Host.CreateApplicationBuilder();
-builder.ConfigureContainer<ContainerBuilder>(o =>
+var builder = Host.CreateDefaultBuilder();
+builder.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(o =>
 {
-    o.RegisterModule(new AutofacModuleRegister());
-    o.RegisterModule<AutofacPropertityModuleReg>();
+    //注入拦截器
+    o.RegisterType<UnitOfWorkAOP>();
+    //注入工作单元管理类
+    o.RegisterType<UnitOfWorkManage>().As<IUnitOfWorkManage>();
+
+    //注入TestService
+    o.RegisterType<TestService>()
+        .AsImplementedInterfaces()  //映射为接口  这里注入的 TestService 将会 自动注入ITestService
+        .EnableInterfaceInterceptors()  // 开启接口拦截   在使用ITestService时 会自动拦截  ，注意直接使用TestService 不会拦截; 也可以通过  EnableClassInterceptors() 开启实现方法的拦截
+        .InterceptedBy(typeof(UnitOfWorkAOP)); //配置拦截器  可 同时配置多个 ，例如  var aops  = List<Type>();    aops.Add(typeof(UnitOfWorkAOP));     .InterceptedBy(aops.ToArray())
+
+
 });
-builder.Configuration.AddJsonFile("appsettings.json");
-builder.Services.AddSqlSugar(configuration: builder.Configuration);
-builder.Services.AddTransient<TestService>();
+
+builder.ConfigureHostConfiguration(o =>
+{
+    o.AddJsonFile("appsettings.json");
+
+})
+
+.ConfigureServices(services =>
+{
+
+    services.AddSqlSugar();
+    services.AddTransient<TestService>();
+});
+
 
 IHost? host = builder.Build();
 
-var testService = host.Services.GetRequiredService<TestService>();
+var testService = host.Services.GetRequiredService<ITestService>();
 await testService.Test();
 
 await host.RunAsync();

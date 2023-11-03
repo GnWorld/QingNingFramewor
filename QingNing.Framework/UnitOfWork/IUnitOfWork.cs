@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace QingNing.DatabaseAccessor;
+namespace QingNing.UnitOfWork;
 public interface IUnitOfWork : IDisposable
 {
 

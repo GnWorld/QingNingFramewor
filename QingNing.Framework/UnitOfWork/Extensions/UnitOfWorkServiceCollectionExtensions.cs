@@ -1,6 +1,6 @@
-﻿using QingNing.DatabaseAccessor;
+﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace QingNing.UnitOfWork.Extensions;
 
 /// <summary>
 /// 工作单元拓展类  ，添加工作单元

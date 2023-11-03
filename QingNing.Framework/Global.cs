@@ -1,4 +1,4 @@
-﻿namespace QingNing.Framework
+﻿namespace QingNing
 {
     //public static class Global
     //{

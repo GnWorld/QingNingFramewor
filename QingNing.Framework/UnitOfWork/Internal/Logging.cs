@@ -1,4 +1,4 @@
-﻿namespace System.Logging;
+﻿namespace QingNing.UnitOfWork.Internal;
 
 /// <summary>
 /// UnitOfWork 日志拓展默认分类名

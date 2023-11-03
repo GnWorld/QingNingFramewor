@@ -4,7 +4,13 @@ using QingNing.MultiDbSqlSugar.Attributes;
 using SqlSugar;
 
 namespace ConsoleApp.SqlSugar.Tem;
-public class TestService
+
+public interface ITestService
+{
+    Task Test();
+}
+
+public class TestService : ITestService
 {
     private readonly SqlSugarRepository<AppRole> _roleRep;
 

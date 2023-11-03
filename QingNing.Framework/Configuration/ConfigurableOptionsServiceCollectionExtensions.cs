@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace QingNing
+namespace QingNing.Configuration
 {
     public static class ConfigurableOptionsServiceCollectionExtensions
     {

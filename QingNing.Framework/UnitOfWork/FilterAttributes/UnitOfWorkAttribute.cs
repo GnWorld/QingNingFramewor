@@ -6,7 +6,7 @@ using System.Logging;
 using System.Reflection;
 using System.Transactions;
 
-namespace QingNing.DatabaseAccessor;
+namespace QingNing.UnitOfWork.FilterAttributes;
 
 /// <summary>
 /// 工作单元配置特性
