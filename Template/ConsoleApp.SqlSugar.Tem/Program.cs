@@ -1,11 +1,7 @@
 ﻿using Autofac;
-using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using Autofac.Extras.DynamicProxy;
-using Castle.Core.Configuration;
 using ConsoleApp.SqlSugar.Tem;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +10,7 @@ using QingNing.MultiDbSqlSugar;
 using QingNing.MultiDbSqlSugar.AOP;
 using QingNing.MultiDbSqlSugar.UOW;
 
-
+using QingNing.Internal;
 //WebApplicationBuilder webBuilder = WebApplication.CreateBuilder();
 //await webBuilder.Build().RunAsync();
 //var configuration = webBuilder.Configuration;
@@ -50,7 +46,7 @@ builder.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Configure
 builder.ConfigureHostConfiguration(o =>
 {
     o.AddJsonFile("appsettings.json");
-
+    o.Build().ConfigureHostConfiguration();
 })
 
 .ConfigureServices(services =>

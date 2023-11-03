@@ -31,7 +31,7 @@ public static class InternalApp
         return wab;
     }
 
-    public static void ConfigureApplication(this IConfiguration configuration)
+    public static void ConfigureHostConfiguration(this IConfiguration configuration)
     {
         Configuration = configuration;
     }

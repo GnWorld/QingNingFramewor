@@ -8,6 +8,7 @@ using System.Collections;
 using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Serilog;
 namespace QingNing.MultiDbSqlSugar;
 
 public static class SqlSugarSetup
@@ -116,6 +117,8 @@ public static class SqlSugarSetup
             Console.WriteLine("【" + DateTime.Now + "——执行SQL】\r\n" + UtilMethods.GetSqlString(config.DbType, sql, pars) + "\r\n");
             Console.ForegroundColor = originColor;
         };
+
+
         db.Aop.OnError = ex =>
         {
             if (ex.Parametres == null) return;

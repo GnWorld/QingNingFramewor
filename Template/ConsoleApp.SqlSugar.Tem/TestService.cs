@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using QingNing.MultiDbSqlSugar;
 using QingNing.MultiDbSqlSugar.Attributes;
+using Serilog;
 using SqlSugar;
+using StackExchange.Profiling.Internal;
 
 namespace ConsoleApp.SqlSugar.Tem;
 
@@ -23,23 +25,32 @@ public class TestService : ITestService
     [UnitOfWork]
     public async Task Test()
     {
-        var role = new AppRole()
+        try
         {
-            RoleId = 1,
-            RoleName = "test",
-            Code = "Test",
-        };
+            var role = new AppRole()
+            {
+                RoleId = 1,
+                RoleName = "test",
+                Code = "Test",
+            };
 
-        await _roleRep.InsertAsync(role);
+            await _roleRep.InsertAsync(role);
 
-        var role2 = new AppRole()
+            var role2 = new AppRole()
+            {
+                RoleId = 1,
+                RoleName = null,
+                Code = "Test",
+            };
+
+            await _roleRep.InsertAsync(role2);
+        }
+        catch (Exception ex)
         {
-            RoleId = 1,
-            RoleName = null,
-            Code = "Test",
-        };
 
-        await _roleRep.InsertAsync(role2);
+            Console.WriteLine(ex.ToJson());
+        }
+
         //var t = await _testRep.Context.SqlQueryable<AppRole>("select * from AppRole").ToListAsync();
 
         //var a = await _testRep.InsertAsync(new AppRole { Id = 2, Code = "Admin", Name = "管理员" });

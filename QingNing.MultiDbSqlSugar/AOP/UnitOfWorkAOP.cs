@@ -25,8 +25,6 @@ public class UnitOfWorkAOP : IInterceptor
     /// <param name="invocation">包含被拦截方法的信息</param>
     public void Intercept(IInvocation invocation)
     {
-
-        Console.WriteLine("调用方法前");
         var method = invocation.MethodInvocationTarget ?? invocation.Method;
         //对当前方法的特性验证
         //如果需要验证
