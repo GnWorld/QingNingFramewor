@@ -10,13 +10,13 @@ namespace QingNing.MultiDbSqlSugar.AOP;
 /// </summary>
 public class UnitOfWorkAOP : IInterceptor
 {
-    //private readonly ILogger<UnitOfWorkAOP> _logger;
+    private readonly ILogger<UnitOfWorkAOP> _logger;
     private readonly IUnitOfWorkManage _unitOfWorkManage;
 
-    public UnitOfWorkAOP(IUnitOfWorkManage unitOfWorkManage)
+    public UnitOfWorkAOP(IUnitOfWorkManage unitOfWorkManage, ILogger<UnitOfWorkAOP> logger)
     {
         _unitOfWorkManage = unitOfWorkManage;
-
+        _logger = logger;
     }
 
     /// <summary>
@@ -52,14 +52,11 @@ public class UnitOfWorkAOP : IInterceptor
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex.ToString());
+                _logger.LogError(ex.ToString());
                 AfterException(method);
                 throw;
             }
-            finally
-            {
-                uta.FinalAction?.Invoke();
-            }
+
         }
         else
         {
@@ -74,8 +71,7 @@ public class UnitOfWorkAOP : IInterceptor
             case Propagation.Required:
                 if (_unitOfWorkManage.TranCount <= 0)
                 {
-                    //_logger.LogDebug($"Begin Transaction");
-                    Console.WriteLine($"Begin Transaction");
+                    _logger.LogDebug($"Begin Transaction");
                     _unitOfWorkManage.BeginTran(method);
                 }
 
@@ -88,8 +84,7 @@ public class UnitOfWorkAOP : IInterceptor
 
                 break;
             case Propagation.Nested:
-                //_logger.LogDebug($"Begin Transaction");
-                Console.WriteLine($"Begin Transaction");
+                _logger.LogDebug($"Begin Transaction");
                 _unitOfWorkManage.BeginTran(method);
                 break;
             default:

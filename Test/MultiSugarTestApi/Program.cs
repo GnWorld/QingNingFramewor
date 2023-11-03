@@ -2,6 +2,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Autofac.Extras.DynamicProxy;
 using MultiSugarTestApi;
+using QingNing.Internal;
 using QingNing.MultiDbSqlSugar;
 using QingNing.MultiDbSqlSugar.AOP;
 using QingNing.MultiDbSqlSugar.UOW;
@@ -25,13 +26,13 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 
 
     });
+builder.ConfigureApplication();
 builder.Services.AddSqlSugar();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

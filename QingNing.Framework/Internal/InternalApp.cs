@@ -22,11 +22,13 @@ public static class InternalApp
     /// <summary>配置对象</summary>
     internal static IConfiguration Configuration;
 
-    public static void ConfigureApplication(this WebApplicationBuilder wab)
+    public static WebApplicationBuilder ConfigureApplication(this WebApplicationBuilder wab)
     {
         HostEnvironment = wab.Environment;
         WebHostEnvironment = wab.Environment;
         InternalServices = wab.Services;
+        Configuration = wab.Configuration;
+        return wab;
     }
 
     public static void ConfigureApplication(this IConfiguration configuration)

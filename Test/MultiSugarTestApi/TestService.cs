@@ -27,6 +27,8 @@ public class TestService : ITestService
         _unitOfWorkManage = unitOfWorkManage;
     }
 
+
+
     [UnitOfWork(Propagation = Propagation.Nested)]
     public async Task Test2()
     {
