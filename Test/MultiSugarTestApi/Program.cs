@@ -25,7 +25,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 
 
     });
-builder.Services.AddSqlSugar(builder.Configuration);
+builder.Services.AddSqlSugar();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

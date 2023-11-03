@@ -17,4 +17,8 @@
     <PackageReference Include="SqlSugarCore" Version="5.1.4.77" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\QingNing.Framework\QingNing.csproj" />
+  </ItemGroup>
+
 </Project>
