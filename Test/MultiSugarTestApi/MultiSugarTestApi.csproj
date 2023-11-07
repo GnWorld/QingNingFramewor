@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\QingNing.MultiDbSqlSugar\QingNing.MultiDbSqlSugar.csproj" />
+    <ProjectReference Include="..\..\QingNing.Swagger\QingNing.Swagger.csproj" />
   </ItemGroup>
 
 </Project>

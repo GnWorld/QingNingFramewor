@@ -1,14 +1,11 @@
+using Autofac;
 using Mapster;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using QingNing.MultiDbSqlSugar.Extensions;
 using SqlSugar;
 using System.Collections;
 using System.Reflection;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using Serilog;
 namespace QingNing.MultiDbSqlSugar;
 
 public static class SqlSugarSetup

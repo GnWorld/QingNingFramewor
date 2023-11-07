@@ -4,6 +4,7 @@ using ConsoleApp.FreeSqlTemplate.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using QingNing.MultiFreeSql.Base;
 using Serilog;
 using Serilog.Events;
 

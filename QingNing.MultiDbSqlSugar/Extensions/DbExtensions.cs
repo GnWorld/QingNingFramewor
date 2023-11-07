@@ -1,4 +1,11 @@
-﻿using System.Reflection;
+﻿using Autofac;
+using Autofac.Extras.DynamicProxy;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using QingNing.MultiDbSqlSugar.AOP;
+using QingNing.MultiDbSqlSugar.UOW;
+using Serilog;
+using System.Reflection;
 
 namespace QingNing.MultiDbSqlSugar.Extensions
 {
@@ -39,6 +46,39 @@ namespace QingNing.MultiDbSqlSugar.Extensions
 
             // 判断逻辑
             bool IsTheRawGenericType(Type type) => generic == (type.IsGenericType ? type.GetGenericTypeDefinition() : type);
+        }
+
+
+        public static IHostBuilder ConfigureHost(this IHostBuilder hostBuilder, string serviceDllName)
+        {
+            hostBuilder.ConfigureContainer<ContainerBuilder>(o =>
+             {
+                 //注入拦截器
+                 o.RegisterType<UnitOfWorkInterceptor>();
+                 //注入工作单元管理类
+                 o.RegisterType<UnitOfWorkManage>().As<IUnitOfWorkManage>();
+
+                 var basePath = AppContext.BaseDirectory;
+                 //builder.RegisterType<AdvertisementServices>().As<IAdvertisementServices>();
+
+                 var servicesDllFile = Path.Combine(basePath, serviceDllName);
+                 if (!File.Exists(servicesDllFile))
+                 {
+                     var msg = "service.dll 丢失";
+                     Log.Error(msg);
+                     throw new Exception(msg);
+                 }
+                 var assemblysServices = Assembly.LoadFrom(servicesDllFile);
+                 o.RegisterAssemblyTypes(assemblysServices)
+                     .AsImplementedInterfaces()  //映射为接口  这里注入的 TestService 将会 自动注入ITestService
+                     .InstancePerLifetimeScope()
+                     .PropertiesAutowired()
+                     .EnableClassInterceptors()
+                     .EnableInterfaceInterceptors()    // 开启接口拦截   在使用ITestService时 会自动拦截  ，注意直接使用TestService 不会拦截; 也可以通过  EnableClassInterceptors() 开启实现方法的拦截
+                     .InterceptedBy(typeof(UnitOfWorkInterceptor)); //配置拦截器  可 同时配置多个 ，例如  var aops  = List<Type>();    aops.Add(typeof(UnitOfWorkAOP));     .InterceptedBy(aops.ToArray())
+             });
+            return hostBuilder;
+
         }
     }
 

@@ -1,11 +1,7 @@
 ﻿using FreeSql;
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace QingNing.MultiFreeSql
+namespace QingNing.MultiFreeSql.Base
 {
     public class BaseRepositoryExtend<T, TKey> : BaseRepository<T, TKey> where T : class, new()
     {

@@ -1,4 +1,4 @@
-﻿namespace QingNing.MultiFreeSql;
+﻿namespace QingNing.MultiFreeSql.TenantBase;
 public interface ITenant
 {
     /// <summary>

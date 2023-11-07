@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace QingNing.MultiFreeSql
+namespace QingNing.MultiFreeSql.Base
 {
     /// <summary>
     /// PostGIS单一谓词函数枚举

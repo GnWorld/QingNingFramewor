@@ -1,4 +1,4 @@
-﻿namespace QingNing.MultiFreeSql;
+﻿namespace QingNing.MultiFreeSql.TenantBase;
 /// <summary>
 /// 多租户管理器
 /// </summary>

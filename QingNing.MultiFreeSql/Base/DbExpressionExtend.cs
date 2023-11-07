@@ -6,7 +6,7 @@ using NetTopologySuite.Geometries;
 
 using Npgsql.LegacyPostgis;
 
-namespace QingNing.MultiFreeSql
+namespace QingNing.MultiFreeSql.Base
 {
     [ExpressionCall]
     public static class BaseDbFuncExtend

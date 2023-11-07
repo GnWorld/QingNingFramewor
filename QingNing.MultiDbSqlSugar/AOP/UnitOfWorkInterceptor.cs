@@ -8,12 +8,12 @@ namespace QingNing.MultiDbSqlSugar.AOP;
 /// <summary>
 /// 事务拦截器BlogTranAOP 继承IInterceptor接口
 /// </summary>
-public class UnitOfWorkAOP : IInterceptor
+public class UnitOfWorkInterceptor : IInterceptor
 {
-    private readonly ILogger<UnitOfWorkAOP> _logger;
+    private readonly ILogger<UnitOfWorkInterceptor> _logger;
     private readonly IUnitOfWorkManage _unitOfWorkManage;
 
-    public UnitOfWorkAOP(IUnitOfWorkManage unitOfWorkManage, ILogger<UnitOfWorkAOP> logger)
+    public UnitOfWorkInterceptor(IUnitOfWorkManage unitOfWorkManage, ILogger<UnitOfWorkInterceptor> logger)
     {
         _unitOfWorkManage = unitOfWorkManage;
         _logger = logger;
@@ -60,6 +60,8 @@ public class UnitOfWorkAOP : IInterceptor
         {
             invocation.Proceed(); //直接执行被拦截方法
         }
+
+
     }
 
     private void Before(MethodInfo method, Propagation propagation)

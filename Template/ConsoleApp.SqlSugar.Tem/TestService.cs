@@ -27,23 +27,24 @@ public class TestService : ITestService
     {
         try
         {
-            var role = new AppRole()
-            {
-                RoleId = 1,
-                RoleName = "test",
-                Code = "Test",
-            };
+            //var role = new AppRole()
+            //{
+            //    RoleId = 1,
+            //    RoleName = "test",
+            //    Code = "Test",
+            //};
 
-            await _roleRep.InsertAsync(role);
+            //await _roleRep.InsertAsync(role);
 
-            var role2 = new AppRole()
-            {
-                RoleId = 1,
-                RoleName = null,
-                Code = "Test",
-            };
+            //var role2 = new AppRole()
+            //{
+            //    RoleId = 1,
+            //    RoleName = null,
+            //    Code = "Test",
+            //};
 
-            await _roleRep.InsertAsync(role2);
+            //await _roleRep.InsertAsync(role2);
+            await _roleRep.Context.Ado.ExecuteCommandAsync("delete from AppRole");
         }
         catch (Exception ex)
         {

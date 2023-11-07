@@ -1,6 +1,6 @@
 ﻿using FreeSql;
 
-namespace QingNing.MultiFreeSql;
+namespace QingNing.MultiFreeSql.Base;
 
 /// <summary>
 /// 数据库连接配置

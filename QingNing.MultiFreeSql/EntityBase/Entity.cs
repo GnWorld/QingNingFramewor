@@ -1,6 +1,6 @@
 ﻿using FreeSql.DataAnnotations;
 
-namespace QingNing.MultiFreeSql;
+namespace QingNing.MultiFreeSql.EntityBase;
 public class Entity
 {
     [Column(IsPrimary = true, Name = "id")]
