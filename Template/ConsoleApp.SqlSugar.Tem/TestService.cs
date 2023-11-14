@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using QingNing.MultiDbSqlSugar;
 using QingNing.MultiDbSqlSugar.Attributes;
-using Serilog;
+using QingNing.MultiDbSqlSugar.UOW;
 using SqlSugar;
 using StackExchange.Profiling.Internal;
 
@@ -15,43 +15,37 @@ public interface ITestService
 public class TestService : ITestService
 {
     private readonly SqlSugarRepository<AppRole> _roleRep;
+    private readonly IUnitOfWorkManage _unitOfWorkManage;
 
-
-    public TestService(SqlSugarRepository<AppRole> testRep)
+    public TestService(SqlSugarRepository<AppRole> testRep, IUnitOfWorkManage unitOfWorkManage)
     {
         _roleRep = testRep;
+        _unitOfWorkManage = unitOfWorkManage;
     }
 
     [UnitOfWork]
     public async Task Test()
     {
-        try
-        {
-            //var role = new AppRole()
-            //{
-            //    RoleId = 1,
-            //    RoleName = "test",
-            //    Code = "Test",
-            //};
 
-            //await _roleRep.InsertAsync(role);
+            var role = new AppRole()
+            {
+                RoleId = 1,
+                RoleName = "test",
+                Code = "Test",
+            };
 
-            //var role2 = new AppRole()
-            //{
-            //    RoleId = 1,
-            //    RoleName = null,
-            //    Code = "Test",
-            //};
+            await _roleRep.InsertAsync(role);
 
-            //await _roleRep.InsertAsync(role2);
-            await _roleRep.Context.Ado.ExecuteCommandAsync("delete from AppRole");
-        }
-        catch (Exception ex)
-        {
+            var role2 = new AppRole()
+            {
+                RoleId = 1,
+                RoleName = null,
+                Code = "Test",
+            };
 
-            Console.WriteLine(ex.ToJson());
-        }
-
+            await _roleRep.InsertAsync(role2);
+            //await _roleRep.Context.Ado.ExecuteCommandAsync("delete from AppRole");
+ 
         //var t = await _testRep.Context.SqlQueryable<AppRole>("select * from AppRole").ToListAsync();
 
         //var a = await _testRep.InsertAsync(new AppRole { Id = 2, Code = "Admin", Name = "管理员" });
