@@ -25,7 +25,7 @@ public static class SqlSugarSetup
         {
             dbOptions?.ConnectionConfigs.ForEach(config =>
             {
-                var dbProvider = db.GetConnectionScope(config.ConfigId);
+                dynamic? dbProvider = db.GetConnectionScope(config.ConfigId);
                 SetDbAop(dbProvider);
                 SetDbDiffLog(dbProvider, config);
             });

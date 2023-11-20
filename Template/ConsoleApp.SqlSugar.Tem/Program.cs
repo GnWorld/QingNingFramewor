@@ -33,15 +33,14 @@ builder.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Configure
     o.RegisterType<UnitOfWorkInterceptor>();
     //注入工作单元管理类
     o.RegisterType<UnitOfWorkManage>().As<IUnitOfWorkManage>();
-
+    
     //注入TestService
     o.RegisterType<TestService>()
         .AsImplementedInterfaces()  //映射为接口  这里注入的 TestService 将会 自动注入ITestService
         .EnableInterfaceInterceptors()  // 开启接口拦截   在使用ITestService时 会自动拦截  ，注意直接使用TestService 不会拦截; 也可以通过  EnableClassInterceptors() 开启实现方法的拦截
         .InterceptedBy(typeof(UnitOfWorkInterceptor)); //配置拦截器  可 同时配置多个 ，例如  var aops  = List<Type>();    aops.Add(typeof(UnitOfWorkAOP));     .InterceptedBy(aops.ToArray())
-
-
 });
+
 
 builder.ConfigureHostConfiguration(o =>
 {
@@ -51,7 +50,6 @@ builder.ConfigureHostConfiguration(o =>
 
 .ConfigureServices(services =>
 {
-
     services.AddSqlSugar();
     services.AddTransient<TestService>();
 });
