@@ -14,11 +14,12 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
     <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.3.8" />
+    <PackageReference Include="Npgsql.NetTopologySuite" Version="5.0.11" />
     <PackageReference Include="SqlSugarCore" Version="5.1.4.77" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\QingNing.Framework\QingNing.csproj" />
+    <ProjectReference Include="..\..\..\..\Opr\OprReceiver\QingNing.Framework\QingNing.csproj" />
   </ItemGroup>
 
 </Project>

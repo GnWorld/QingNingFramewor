@@ -35,4 +35,11 @@ public sealed class DbConnectionConfig : ConnectionConfig
     /// 启用驼峰转下划线
     /// </summary>
     public bool EnableUnderLine { get; set; }
+
+    /// <summary>
+    /// 从库
+    /// </summary>
+    public List<SlaveConnectionConfig> SlaveConnectionConfigs { get; set; }
+
+
 }

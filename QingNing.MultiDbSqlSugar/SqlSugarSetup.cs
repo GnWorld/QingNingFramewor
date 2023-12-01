@@ -2,6 +2,7 @@ using Autofac;
 using Mapster;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Npgsql;
 using QingNing.MultiDbSqlSugar.Extensions;
 using SqlSugar;
 using System.Collections;
@@ -21,16 +22,18 @@ public static class SqlSugarSetup
         var dbOptions = configuration.GetSection(dbConnectionOptions).Get<DbConnectionOptions>();
         dbOptions?.ConnectionConfigs.ForEach(SetDbConfig);
 
-        SqlSugarScope sqlSugar = new(dbOptions?.ConnectionConfigs.Adapt<List<ConnectionConfig>>(), db =>
+
+        SqlSugarScope sqlSugar = new SqlSugarScope(dbOptions?.ConnectionConfigs.Adapt<List<ConnectionConfig>>(), db =>
         {
+            NpgsqlConnection.GlobalTypeMapper.UseNetTopologySuite();
             dbOptions?.ConnectionConfigs.ForEach(config =>
             {
                 dynamic? dbProvider = db.GetConnectionScope(config.ConfigId);
+
                 SetDbAop(dbProvider);
                 SetDbDiffLog(dbProvider, config);
             });
         });
-
         services.AddSingleton<ISqlSugarClient>(sqlSugar); // 单例注册
         services.AddScoped(typeof(SqlSugarRepository<>)); // 仓储注册
         //services.AddUnitOfWork<SqlSugarUnitOfWork>(); // 事务与工作单元注册  
@@ -53,6 +56,7 @@ public static class SqlSugarSetup
     /// <param name="config"></param>
     private static void SetDbConfig(DbConnectionConfig config)
     {
+
         var configureExternalServices = new ConfigureExternalServices
         {
             EntityNameService = (type, entity) => // 处理表
@@ -77,16 +81,19 @@ public static class SqlSugarSetup
             },
             //DataInfoCacheService = new SqlSugarCache(),
         };
+
         config.ConfigureExternalServices = configureExternalServices;
         config.InitKeyType = InitKeyType.Attribute;
         config.IsAutoCloseConnection = true;
-        config.SlaveConnectionConfigs = new List<SlaveConnectionConfig>() { };
+
+        //config.SlaveConnectionConfigs = config.SlaveConnectionConfigs;
         config.MoreSettings = new ConnMoreSettings
         {
+
             IsAutoRemoveDataCache = true,
             IsAutoDeleteQueryFilter = true, // 启用删除查询过滤器
             IsAutoUpdateQueryFilter = true, // 启用更新查询过滤器
-            SqlServerCodeFirstNvarchar = true // 采用Nvarchar
+            SqlServerCodeFirstNvarchar = false // 采用Nvarchar
         };
     }
 
@@ -100,6 +107,7 @@ public static class SqlSugarSetup
 
         // 设置超时时间
         db.Ado.CommandTimeOut = 30;
+
 
         // 打印SQL语句
         db.Aop.OnLogExecuting = (sql, pars) =>

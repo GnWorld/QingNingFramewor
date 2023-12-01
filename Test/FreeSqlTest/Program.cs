@@ -27,9 +27,6 @@ Log.Logger = new LoggerConfiguration()
 
 var configBuilder = new ConfigurationBuilder();
 
-
-
-
 var builder = Host.CreateDefaultBuilder();
 
 builder.ConfigureLogging(loggin =>
