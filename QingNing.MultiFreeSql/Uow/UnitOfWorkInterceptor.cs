@@ -1,6 +1,7 @@
 ﻿using Castle.DynamicProxy;
 using FreeSql;
 using Microsoft.Extensions.Logging;
+using MySqlX.XDevAPI.Relational;
 using QingNing.MultiFreeSql.Attributes;
 using System.Reflection;
 
@@ -23,24 +24,34 @@ public class UnitOfWorkInterceptor : IInterceptor
         {
             try
             {
-                _uowManager.Begin(uta.Propagation);
-                invocation.Proceed();
-
-                if (IsAsyncMethod(method))
+                using (var uow = _uowManager.Begin(uta.Propagation))
                 {
-                    var result = invocation.ReturnValue;
-                    if (result is Task)
+                    try
                     {
-                        Task.WaitAll(result as Task);
+                        invocation.Proceed();
+
+                        if (IsAsyncMethod(method))
+                        {
+                            var result = invocation.ReturnValue;
+                            if (result is Task)
+                            {
+                                Task.WaitAll(result as Task);
+                            }
+                        }
+                        uow.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        uow.Rollback();
+                        throw;
                     }
                 }
-                _uowManager.Current.Commit();
             }
             catch (Exception ex)
             {
 
                 _logger.LogError(ex.ToString());
-                _uowManager.Current.Rollback();
+
                 throw;
             }
         }

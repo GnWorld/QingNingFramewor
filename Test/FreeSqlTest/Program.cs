@@ -33,19 +33,25 @@ builder.ConfigureLogging(loggin =>
 {
     loggin.AddSerilog(Log.Logger);
 
-}).UseServiceProviderFactory(new AutofacServiceProviderFactory())
+})
+    
+
+.UseServiceProviderFactory(new AutofacServiceProviderFactory())
+
+
 .ConfigureContainer<ContainerBuilder>(container =>
 {
-    //注入拦截器
+    //拦截器
     container.RegisterType<UnitOfWorkInterceptor>();
-    //注入工作单元管理类
+
+    //工作单元管理
     container.RegisterType<UnitOfWorkManager>().InstancePerLifetimeScope();
 
     //注入TestService
     container.RegisterType<TestService>()
-        .AsImplementedInterfaces()  //映射为接口  这里注入的 TestService 将会 自动注入ITestService
-        .EnableInterfaceInterceptors()  // 开启接口拦截   在使用ITestService时 会自动拦截  ，注意直接使用TestService 不会拦截; 也可以通过  EnableClassInterceptors() 开启实现方法的拦截
-        .InterceptedBy(typeof(UnitOfWorkInterceptor)); //配置拦截器  可 同时配置多个 ，例如  var aops  = List<Type>();    aops.Add(typeof(UnitOfWorkAOP));     .InterceptedBy(aops.ToArray())
+        .AsImplementedInterfaces() 
+        .EnableInterfaceInterceptors()  
+        .InterceptedBy(typeof(UnitOfWorkInterceptor));
 
 }).ConfigureHostConfiguration(x =>
 {
@@ -57,7 +63,6 @@ builder.ConfigureLogging(loggin =>
 
     services.RegisterFreeSql(configBuilder.Build());
     services.AddFreeRepository(null, typeof(BaseRepositoryExtend<,>).Assembly);
-
 });
 
 var app = builder.Build();
