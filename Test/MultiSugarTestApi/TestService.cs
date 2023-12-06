@@ -1,7 +1,10 @@
 ﻿using MultiSugarTestApi.Controllers;
+using Newtonsoft.Json;
+using QingNing.Extensions;
 using QingNing.MultiDbSqlSugar;
 using QingNing.MultiDbSqlSugar.Attributes;
 using QingNing.MultiDbSqlSugar.UOW;
+using SqlSugar;
 
 namespace MultiSugarTestApi;
 
@@ -46,34 +49,75 @@ public class TestService : ITestService
     }
 
 
-    [UnitOfWork]
+    //[UnitOfWork]
     public async Task Test()
     {
-        var role1 = new AppRole()
+        try
         {
-            RoleId = 1,
-            RoleName = "role1",
-            Code = "role1"
+            var list = new List<GtPath>() { new GtPath { P1 = "1", P2 = "1" }, new GtPath { P1 = "2", P2 = "2" } };
+            AppRole? role1 = new AppRole()
+            {
+                RoleId = 1,
+                RoleName = "role1",
+                Code = "role1",
+                Path = list
 
-        };
-        _roleRep.Insert(role1);
+            };
+            await _roleRep.InsertAsync(role1);
 
-        var role2 = new AppRole()
+            List<AppRole>? a = await _roleRep.AsQueryable().ToListAsync();
+        }
+        catch (Exception ex)
         {
-            RoleName = "role2",
-            RoleId = 2,
-            Code = "role2",
-        };
+
+            throw;
+        }
+
+        //var role2 = new AppRole()
+        //{
+        //    RoleName = "role2",
+        //    RoleId = 2,
+        //    Code = "role2",
+        //};
 
 
-        _roleRep.Insert(role2);
+        //_roleRep.Insert(role2);
 
 
-        await _roleRep.AsQueryable().ToListAsync();
 
         Console.WriteLine("测试方法");
 
     }
 
 
+}
+
+[SugarTable]
+public class AppRole
+{
+    /// <summary>
+    /// 角色ID
+    /// </summary>
+    [JsonProperty, SugarColumn(ColumnName = "role_id", IsPrimaryKey = true, IsIdentity = true)]
+    public long RoleId { get; set; }
+
+    /// <summary>
+    /// 角色名称
+    /// </summary>
+    [JsonProperty, SugarColumn(ColumnName = "role_name", ColumnDataType = "varchar(60)")]
+    public string RoleName { get; set; } = string.Empty;
+
+    [SugarColumn(IsNullable = false)]
+    public string Code { get; set; }
+
+    [SugarColumn(ColumnDataType ="jsonb",IsJson = true)]
+    public List<GtPath> Path { get; set; }
+}
+
+
+public class GtPath
+{
+    public string P1 { get; set; }
+
+    public string P2 { get; set; }
 }

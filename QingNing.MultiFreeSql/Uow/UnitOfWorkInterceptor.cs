@@ -24,28 +24,28 @@ public class UnitOfWorkInterceptor : IInterceptor
         {
             try
             {
-                using (var uow = _uowManager.Begin(uta.Propagation))
-                {
-                    try
-                    {
-                        invocation.Proceed();
+                using var uow = _uowManager.Begin(uta.Propagation);
 
-                        if (IsAsyncMethod(method))
-                        {
-                            var result = invocation.ReturnValue;
-                            if (result is Task)
-                            {
-                                Task.WaitAll(result as Task);
-                            }
-                        }
-                        uow.Commit();
-                    }
-                    catch (Exception ex)
+                try
+                {
+                    invocation.Proceed();
+
+                    if (IsAsyncMethod(method))
                     {
-                        uow.Rollback();
-                        throw;
+                        var result = invocation.ReturnValue;
+                        if (result is Task)
+                        {
+                            Task.WaitAll(result as Task);
+                        }
                     }
+                    uow.Commit();
                 }
+                catch (Exception ex)
+                {
+                    uow.Rollback();
+                    throw;
+                }
+
             }
             catch (Exception ex)
             {

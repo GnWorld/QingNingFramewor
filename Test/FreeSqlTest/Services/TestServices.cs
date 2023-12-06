@@ -44,7 +44,7 @@ public class TestService : ITestService
             //await _roleRep.InsertAsync(role2);
             //await _roleRep.Context.Ado.ExecuteCommandAsync("delete from AppRole");
 
-            var routes = await _routesOptimizedRep.Select.Limit(10).ToListAsync();
+           // var routes = await _routesOptimizedRep.Select.Limit(10).ToListAsync();
 
         }
         catch (Exception ex)

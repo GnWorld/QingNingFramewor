@@ -37,12 +37,12 @@ builder.Services.AddSwaggerSetup();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSession();
-    app.UseSwaggerAuthorized();
-    app.UseSwaggerMiddle(() => Assembly.GetExecutingAssembly().GetManifestResourceStream("index.html"));
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSession();
+//    app.UseSwaggerAuthorized();
+//    app.UseSwaggerMiddle(() => Assembly.GetExecutingAssembly().GetManifestResourceStream("index.html"));
+//}
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

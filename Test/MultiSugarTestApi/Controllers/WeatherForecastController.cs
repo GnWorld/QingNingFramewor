@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SqlSugar;
 
 namespace MultiSugarTestApi.Controllers;
@@ -42,23 +43,5 @@ public class WeatherForecastController : ControllerBase
 }
 
 
-[SugarTable]
-public class AppRole
-{
-    /// <summary>
-    /// ½ÇÉ«ID
-    /// </summary>
-    [JsonProperty, SugarColumn(ColumnName = "role_id", IsPrimaryKey = true, IsIdentity = true)]
-    public long RoleId { get; set; }
-
-    /// <summary>
-    /// ½ÇÉ«Ãû³Æ
-    /// </summary>
-    [JsonProperty, SugarColumn(ColumnName = "role_name", ColumnDataType = "varchar(60)")]
-    public string RoleName { get; set; } = string.Empty;
-
-    [SugarColumn(IsNullable = false)]
-    public string Code { get; set; }
-}
 
 
