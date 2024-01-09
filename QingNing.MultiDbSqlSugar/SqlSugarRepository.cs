@@ -102,5 +102,20 @@ public class SqlSugarRepository<T> : SimpleClient<T> where T : class, new()
         return f;
     }
 
+    /// <summary>
+    /// 立即批量插入
+    /// </summary>
+    /// <param name="list"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> InsertRangeNowAsync(List<T> list)
+    {
+        using var uow = Context.CreateContext();
+        var f = await uow.Db.Insertable(list).ExecuteCommandAsync() > 0;
+        uow.Commit();
+        return f;
+
+    }
+
+
 
 }
