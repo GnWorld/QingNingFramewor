@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Opr\OprReceiver\QingNing.Framework\QingNing.csproj" />
+    <ProjectReference Include="..\..\OprReceiver\QingNing.Framework\QingNing.csproj" />
   </ItemGroup>
 
 </Project>
