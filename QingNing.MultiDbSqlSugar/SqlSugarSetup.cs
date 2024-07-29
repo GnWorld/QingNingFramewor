@@ -106,7 +106,7 @@ public static class SqlSugarSetup
         var config = db.CurrentConnectionConfig;
 
         // 设置超时时间
-        db.Ado.CommandTimeOut = 30;
+        db.Ado.CommandTimeOut = int.MaxValue;
 
 
         // 打印SQL语句
